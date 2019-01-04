@@ -3,8 +3,7 @@ import './App.css';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
 import Header from './components/layout/Header';
-import About from './components/pages/About'
-import uuid from 'uuid';
+import About from './components/pages/About';
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -35,12 +34,12 @@ class App extends Component {
   }
 
   addTodo = (title) => {
-    const newTodo = {
-      id: uuid.v4(),
-      title,
-      complete: false
-    }
-    this.setState({ todos: [...this.state.todos, newTodo] })
+    axios.post('https://jsonplaceholder.typicode.com/todos', {
+      title: title,
+      completed: false
+    }).then(res => {
+      this.setState({ todos: [...this.state.todos, res.data] })
+    })
   }
 
   render() {
